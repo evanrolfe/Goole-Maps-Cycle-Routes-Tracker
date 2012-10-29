@@ -312,15 +312,36 @@ function draw_everything(redraw){
 		draw_table(data_retrieved);
 }
 
+function open_dialog(id)
+{
+	var $dialog = $('<div></div>')
+		.html('Are you sure you want to delete the route?')
+		.dialog({
+			autoOpen: false,
+			title: "Deleting route:",
+			modal: true,
+			buttons: {
+			    "Yes": function () {
+					location.href=base_url+"index.php?option=com_routes&task=delete&id="+id;
+			    },
+			    "No": function () {
+			        $(this).dialog("close");
+			    }
+			}
+	});
+
+	$dialog.dialog('open');
+}
+
 function draw_table(routes){
 	var data = [];
+	var delete_dialogs = [];
 
 	for(var i=0; i<routes.length; i++){
+		//1. Add edit/delete links if this route belongs to the logged in user
 		var actions = "";
-
 		if($("#user_id").text() == routes[i].author_id)
-			actions = "<a href='"+base_url+"index.php?option=com_routes&task=edit&id="+routes[i].id+"'>Edit</a>/<a href='"+base_url+"index.php?option=com_routes&task=delete&id="+routes[i].id+"'>Del</a>";
-
+			actions = "<a href='"+base_url+"index.php?option=com_routes&task=edit&id="+routes[i].id+"'>Edit</a>/<a href='#' onclick='open_dialog("+routes[i].id+")'>Del</a>";
 
 		var rating = (routes[i].rating > 0) ? routes[i].rating : '-';
 		data.push([routes[i].id,

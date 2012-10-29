@@ -17,15 +17,10 @@ $asset_url = JURI::base()."components/com_routes/assets/"; ?>
 
 	@import "<?php echo $asset_url; ?>datatable/demo_table.css";
 </style>
-<script type="text/javascript">
-$(function(){
-	$(".confirm").easyconfirm();
-});
-</script>
+
 <script type="text/javascript" src="<?php echo $asset_url; ?>all.js"></script>
 <body onload='initialize()'>
 
-<div id='base_url' style='display:none'><?php echo JURI::base(); ?></div>
 <div id='user_id' style='display:none'><?php echo $this->user_id; ?></div>
 <div id='breadcrumbs'></div>
 		<table width='100%'>
