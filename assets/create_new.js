@@ -166,7 +166,7 @@ function debug_history(){
 			position: position,
 			map:gmap,
 			icon: image,
-			draggable: true
+			draggable: false
 		});
 
 		//Add it to the overlays array so it can be cleared if needed to

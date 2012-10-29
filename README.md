@@ -17,6 +17,7 @@ Developed for Joomla 1.5
 *Tasks to complete*
 * ~~Ask "are you sure" on delete routes~~ (Completed 29/10/2012 - 15:00)
 * Be able to drag/drop markers to change route (include end points)
+	NOTE: This is implemented on the edit page, but to let the user drag points on the create page would probably cause too many query requests to google api which would quite quickly exceed google's limit causing the site to not work.
 * Create: Complete track should add route going back the same direction
 * Edit: Complete track should add route going back the same direction
 * Create: "clear track" should reset distance
