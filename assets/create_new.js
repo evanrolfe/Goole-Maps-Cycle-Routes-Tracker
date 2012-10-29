@@ -166,7 +166,7 @@ function debug_history(){
 			position: position,
 			map:gmap,
 			icon: image,
-			draggable: false
+			draggable: true
 		});
 
 		//Add it to the overlays array so it can be cleared if needed to
@@ -260,6 +260,106 @@ function add_segment(point1, point2){
 
 }
 
+//Split points into partitions of size 9 so that each route has 7 waypoints so one more waypoint can always be added
+function draw_long_route()
+{
+	var partition_size = 9;
+	distance = 0;
+
+	//Partition if necessary
+	if(waypoints.length > partition_size){
+
+		var partitions = partition_arr(waypoints,partition_size);
+
+		for(var i=0; i<partitions.length; i++){
+			draw_short_route(partitions[i]);
+		}
+	}else{
+		draw_short_route(waypoints);
+	}
+
+}
+
+function partition_arr(array, partition_size){
+	tmp_arr = [];
+	out_arr = [];
+
+	//Duplicate the elements at index congruent to 0 modulo the partition size (except for head element)
+	for(var i=0; i<array.length; i++){
+		tmp_arr.push(array[i]);
+
+		if(i % (partition_size-1) == 0 && i >0)
+			tmp_arr.push(array[i]);
+	}
+
+	//Now slice the tmp_arr and return as an array of partitions
+	//Determine the number of partitions
+	num_parts = Math.ceil(tmp_arr.length/partition_size);
+	ranges = [];
+	for(var i=0; i<num_parts;i++){
+		first = i*partition_size;
+		second = (i*partition_size)+partition_size;
+		ranges.push(tmp_arr.slice(first,second));
+	}
+
+	return ranges;
+}
+
+var directionsRenderers = [];
+
+//Input an array of max 10 latlngs where first marker is start and last is destination
+function draw_short_route(points){
+	//Initialize Directions Service Renderer for this indivudal route
+	directionsRenderers.push(new google.maps.DirectionsRenderer({draggable: false}));
+	var renderer = directionsRenderers[directionsRenderers.length-1];
+
+	renderer.setMap(gmap);
+	//renderer.setPanel(document.getElementById("directions"));
+	renderer.suppressMarkers = true;
+	renderer.preserveViewport = true;
+
+	var waypts = [];
+
+	//Parse the waypoints if they exist
+	if(points.length > 2){
+		for(var i=1; i<points.length-1; i++){
+			waypts.push({location: points[i],
+						stopover: false});
+		}
+	}
+
+	//Parameters for the directions service request
+	var request = {
+		origin: points[0],
+		destination: points[points.length-1],
+		waypoints: waypts,
+		optimizeWaypoints: false,
+		travelMode: google.maps.TravelMode.WALKING
+	};
+
+
+	//Make the request
+	directionsService.route(request, function(result, status) {
+		if (status == google.maps.DirectionsStatus.OK) {
+			//1. Push the polyline latlngs to the polyline_latlngs array
+			polyline_latlngs = $.merge(polyline_latlngs, result.routes[0].overview_path);
+
+			//2. Draw the entire polyline (not just this one segment)
+			draw_polyline();
+
+			//3. Add the distance of this segment to the total distance of the track
+			for(var i=0; i<result.routes[0].legs.length; i++){
+				distance += result.routes[0].legs[i].distance.value;
+			}
+
+			//4. Now that we have the polyline we can save this state to history
+			save_to_history();
+
+		}else{
+			alert('Error drawing the route on the map!');
+		}
+	});	
+}
 //======================================================
 //
 // DATA PARSING FUNCTIONS (EXTRACT ROUTE DATA FOR DATABASE)
@@ -361,6 +461,25 @@ function get_elevation_for_points(points){
 // MAP EVENT/INTERACTION FUNCTIONS
 //
 //======================================================
+function update_point(original_latlng, new_latlng){
+	//1. Update waypoints
+	for(var i=0; i<waypoints.length; i++){
+		if(waypoints[i].equals(original_latlng))
+			waypoints[i] = new_latlng;
+	}
+
+	//2.
+	clear_overlays();
+
+	polyline_latlngs = [];
+
+	//3. Draw a long route polyline
+	draw_long_route();
+
+	//4.
+	draw_markers();
+}
+
 function change_unit(){
 	unit = (unit == 'km') ? 'miles' : 'km';
 	draw_distance();
@@ -426,7 +545,7 @@ function initialize() {
 	//1. Draw Map in Preview Div
 	//Create map and display it in div
 	var myOptions = {
-		zoom: 1,
+		zoom: 12,
 		center: new google.maps.LatLng(46.151241,14.995462999999972),
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
