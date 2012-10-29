@@ -503,9 +503,11 @@ function complete_track(){
 
 	track_complete = true;
 	waypoints = circuit_array(waypoints);
+	polyline_latlngs = circuit_array(polyline_latlngs);
 
 	draw_polyline();
 	draw_markers();
+	distance = distance*2;
 
 	save_to_history();
 }
