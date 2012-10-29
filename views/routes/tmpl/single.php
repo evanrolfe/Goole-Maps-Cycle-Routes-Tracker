@@ -16,8 +16,9 @@ $random = $nums[rand(0,3)];
 <script type="text/javascript" src="<?php echo $asset_url; ?>jquery.validate.js"></script>
 <link type="text/css" href="<?php echo $asset_url; ?>jquery-ui-1.8.20.custom.css" rel="Stylesheet" />	
 <link type="text/css" href="<?php echo $asset_url; ?>jquery-ui-1.8.21.custom.css" rel="Stylesheet" />	
-
+<script type='text/javascript' src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<?php echo $asset_url; ?>jquery-ui-1.8.20.custom.min.js"></script>
+
 <script type="text/javascript" src="<?php echo $asset_url; ?>galleria/galleria-1.2.7.js"></script>
 <link type="text/css" href="<?php echo $asset_url; ?>galleria/themes/classic/galleria.classic.css" rel="Stylesheet" />	
   <script type="text/javascript" src="<?php echo $asset_url; ?>rate/js/jquery.raty.js"></script>
@@ -26,7 +27,26 @@ $random = $nums[rand(0,3)];
 <script type="text/javascript" src="<?php echo $asset_url; ?>lightbox/js/jquery.lightbox-0.5.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $asset_url; ?>lightbox/css/jquery.lightbox-0.5.css" media="screen" />
 <script type="text/javascript" src="<?php echo $asset_url; ?>jqModal.js"></script>
+
 <script type="text/javascript">
+function delete_dialog()
+{
+	var $dialog = $('<div></div>').html('Are you sure you want to delete the route?').dialog({
+			autoOpen: false,
+			title: "Deleting route:",
+			modal: true,
+			buttons: {
+			    "Yes": function () {
+					location.href="<?php echo JURI::base(); ?>index.php?option=com_routes&task=delete&id=<?php echo $this->route->id; ?>";
+			    },
+			    "No": function () {
+			        $(this).dialog("close");
+			    }
+			}
+	});
+
+	$dialog.dialog('open');
+}
 $(function(){
 			
 	//$("#preview_div").jqm();
@@ -100,7 +120,7 @@ $(function(){
 			<td valign="top"><b>Title:</b> <?php echo $this->route->title; ?><br><b>Author:</b> <?php echo $this->route->author; ?><br><b>Category:</b> <?php echo $this->route->category; ?> bikes
 <?php if($this->user_id == $this->route->author_id){ ?><br><b>Options:</b> 
 <a href="<?php echo JURI::base(); ?>index.php?option=com_routes&task=edit&id=<?php echo $this->route->id; ?>">Edit</a> /
-<a href="<?php echo JURI::base(); ?>index.php?option=com_routes&task=delete&id=<?php echo $this->route->id; ?>">Delete</a><?php } ?></td>
+<a href="#" onclick="delete_dialog()">Delete</a><?php } ?></td>
 			<td valign="top"><b>Difficulty:</b> <?php echo $this->route->difficulty; ?><br><div id='distance'><b>Distance:</b></div><div id='gain'><b>Gain:</b></div></td>
 			<td valign="top">
 <?php if($this->user_id){ ?>
