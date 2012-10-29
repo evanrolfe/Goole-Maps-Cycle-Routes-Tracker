@@ -15,7 +15,7 @@ Developed for Joomla 1.5
 *  Nothing
 
 *Tasks to complete*
-* <strike>Ask "are you sure" on delete routes</strike> (Completed 29/10/2012 - 15:00)
+* ~~Ask "are you sure" on delete routes~~ (Completed 29/10/2012 - 15:00)
 * Be able to drag/drop markers to change route (include end points)
 * Create: Complete track should add route going back the same direction
 * Edit: Complete track should add route going back the same direction
