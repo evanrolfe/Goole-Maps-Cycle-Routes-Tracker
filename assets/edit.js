@@ -384,10 +384,12 @@ function complete_track(){
 
 	track_complete = true;
 	waypoints = circuit_array(waypoints);
+	polyline_latlngs = circuit_array(polyline_latlngs);
 
 	draw_polyline();
 	draw_markers();
-
+	distance = distance*2;
+	draw_distance();
 	save_to_history();
 }
 
@@ -450,6 +452,7 @@ function draw_route(){
 	//3. Draw markers
 	draw_markers();
 
+	draw_distance();
 	//4. Populate form fields
 	//Using the route data set the values of the html form fields correspondingly
 	$('[name|="waypoints"]').val(route.waypoints);

@@ -18,8 +18,7 @@ Developed for Joomla 1.5
 * ~~Ask "are you sure" on delete routes~~ (Completed 29/10/2012 - 15:00)
 * ~~Be able to drag/drop markers to change route (include end points)~~ (Completed 29/10/2012 - 17:00)
 * ~~Create: Complete track should add route going back the same direction~~ (Completed 29/10/2012 - 17:30)
-* Still have not solved gain/difficulty problem
-* Edit: Complete track should add route going back the same direction
+* ~~Edit: Complete track should add route going back the same direction~~ (Compleeted 30/10/2012 - 19:35)
 * Create: "clear track" should reset distance
 * Edit: "clear track" should reset distance
 * IE9: not able to create track
