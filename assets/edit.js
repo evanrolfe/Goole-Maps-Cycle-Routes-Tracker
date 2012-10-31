@@ -397,8 +397,10 @@ function clear_track(){
 	track_complete = false;
 	waypoints = [];
 	polyline_latlngs = [];
+	distance = 0;
 
 	clear_overlays();
+	draw_distance();
 
 	save_to_history();
 }
@@ -628,6 +630,7 @@ function initialize() {
 
 			//2.1 Draw route on map
 			draw_route();
+			save_to_history();
 		},
 		error: function(data,status){
 			alert("Error retrieving the route!"+status);
