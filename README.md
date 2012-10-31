@@ -26,8 +26,6 @@ Developed for Joomla 1.5
 * Get the right Google API key (the one they supplied doesn't work, see my message at 26-Jul-2012 at 5:32 pm)
 * When viewing track in IE9, map overlaps with Google ads (check attached picture on message at 18-Jul-2012 at 7:35 am)
 
-NOTE: Don't forget to switch off from "dev" mode in route/create and edit, map is zoomed in on slovenia.
-
 From Luka:
 
 * Home link is not linked to the correct first page

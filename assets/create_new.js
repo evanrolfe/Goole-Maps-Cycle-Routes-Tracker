@@ -550,7 +550,7 @@ function initialize() {
 	//1. Draw Map in Preview Div
 	//Create map and display it in div
 	var myOptions = {
-		zoom: 12,
+		zoom: 1,
 		center: new google.maps.LatLng(46.151241,14.995462999999972),
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
