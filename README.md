@@ -19,12 +19,14 @@ Developed for Joomla 1.5
 * ~~Be able to drag/drop markers to change route (include end points)~~ (Completed 29/10/2012 - 17:00)
 * ~~Create: Complete track should add route going back the same direction~~ (Completed 29/10/2012 - 17:30)
 * ~~Edit: Complete track should add route going back the same direction~~ (Compleeted 30/10/2012 - 19:35)
-* Create: "clear track" should reset distance
+* ~~Create: "clear track" should reset distance~~ (Completed 31/10/2012 - 08:45)
 * Edit: "clear track" should reset distance
 * IE9: not able to create track
 * Fix Elevation gain
 * Get the right Google API key (the one they supplied doesn't work, see my message at 26-Jul-2012 at 5:32 pm)
 * When viewing track in IE9, map overlaps with Google ads (check attached picture on message at 18-Jul-2012 at 7:35 am)
+
+NOTE: Don't forget to switch off from "dev" mode in route/create and edit, map is zoomed in on slovenia.
 
 From Luka:
 

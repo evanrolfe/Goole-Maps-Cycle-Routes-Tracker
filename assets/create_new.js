@@ -516,9 +516,12 @@ function clear_track(){
 	track_complete = false;
 	waypoints = [];
 	polyline_latlngs = [];
+	distance = 0;
 
 	clear_overlays();
 
+	//alert("Distance: "+distance);
+	draw_distance();
 	save_to_history();
 }
 
